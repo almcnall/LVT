@@ -1,6 +1,9 @@
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install libnetcdf-dev
-install: true
+install:
+  - wget https://sourceforge.net/projects/esmf/files/ESMF_7_0_0/esmf_7_0_0_src.tar.gz/download
+  - tar -xzvf esmf_7_0_0_src.tar.gz
+  - pushd esmf_7.0.0 && ./configure && make && sudo make install && popd
 language: fortran
 script: ./configure
