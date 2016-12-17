@@ -5,7 +5,7 @@ install:
   - wget https://sourceforge.net/projects/esmf/files/ESMF_7_0_0/esmf_7_0_0_src.tar.gz/download -O esmf_7_0_0_src.tar.gz
   - tar -xzvf esmf_7_0_0_src.tar.gz
   - pushd esmf
-  - export ESMF_DIR=$(PWD)
-  - gmake && sudo gmake install && popd
+  - export ESMF_DIR=$PWD
+  - make && sudo make install && popd
 language: fortran
 script: ./configure
