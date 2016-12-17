@@ -1,0 +1,6 @@
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install libnetcdf-dev
+install: true
+language: fortran
+script: ./configure
