@@ -2,9 +2,10 @@ before_install:
   - sudo apt-get -qq update
   - sudo apt-get install libnetcdf-dev gfortran
 install:
-  - wget https://sourceforge.net/projects/esmf/files/ESMF_7_0_0/esmf_7_0_0_src.tar.gz/download -O /tmp/esmf_7_0_0_src.tar.gz
-  - tar -xzvf /tmp/esmf_7_0_0_src.tar.gz
-  - export ESMF_DIR=/tmp/esmf
-  - pushd $ESMF_DIR && make && sudo make install && popd
+  - pushd /tmp
+  - wget https://sourceforge.net/projects/esmf/files/ESMF_7_0_0/esmf_7_0_0_src.tar.gz/download -O esmf_7_0_0_src.tar.gz
+  - tar -xzvf esmf_7_0_0_src.tar.gz
+  - pushd esmf && export ESMF_DIR=$PWD && make && sudo make install && popd
+  - popd
 language: fortran
 script: ./configure
