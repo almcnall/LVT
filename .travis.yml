@@ -4,8 +4,8 @@ before_install:
 install:
   - pushd /tmp
   - wget https://sourceforge.net/projects/esmf/files/ESMF_7_0_0/esmf_7_0_0_src.tar.gz/download -O esmf_7_0_0_src.tar.gz
-  - tar -xzvf esmf_7_0_0_src.tar.gz
+  - tar -xzf esmf_7_0_0_src.tar.gz
   - pushd esmf && export ESMF_DIR=$PWD && make && sudo make install && popd
   - popd
 language: fortran
-script: ./configure
+script: export LVT_ARCH=linux_gfortran && ./configure
