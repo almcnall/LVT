@@ -1,0 +1,352 @@
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Land Verification Toolkit (LVT) Release Notes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. admonition:: **Current release:**
+
+          Land Verification Toolkit (LVT) Public Release 7.1r
+
+          April 2015
+
+
+===========
+CHANGE LOG:
+===========
+
+
+================================================================
+Land Verification Toolkit (LVT) Public Release 7.1r (r5471:5926)
+================================================================
+
+This is the public release of LVT 7.1.
+
+These updates consist of:
+
+- Incorporate Eric Kemp's Makefile update
+
+- Update documentation
+
+- bug fix related to the output of summary and final metric files
+
+- Add support to choose between big and little endian for linux_ifc systems
+
+- plugins to process the Great Lakes Hydro data
+
+- Added plugins for MODIS LST, updates to GRACE plugin to support the 13 day
+  product, Support for temproal smoothing of observations
+
+- Added the capability to do time lagged computations
+
+- Minor formatting clean-ups.
+
+- Added options when processing observations.
+  Can now write data in LIS-style for Routing,
+  RTM, and Irrigation, in addition to LSM.
+
+- Added new units for evaporation flux components.
+
+- Added additional NLDAS-2 variables available to
+  be processed by LVT.  Includes an overhaul and
+  streamline of the code.
+
+- Added a SMOS L1 Tb reader
+
+- Added support for GCOMW, ASCAT and SMOS
+
+
+
+========================================================================
+Land Verification Toolkit (LVT) Public Release 7.0r (r4080:5470)
+========================================================================
+
+This patch release includes updates r4080:5464
+
+- Merge tools/lvt/7/development into tools/lvt/7/public7.0
+
+  These updates consist of:
+
+  * fixes for gfortran and pointer to allocatable conversions
+
+- Add more descriptive NetCDF prompts (thanks Shugong)
+
+- Remove MPI from configure scripts.
+
+- Merge tools/lvt/7/development into tools/lvt/7/public7.0
+
+  These updates consist of:
+
+  * documentation update
+
+  * bug fixes to CPC precip plugin
+
+    updated GHCN to process precip obs
+
+    updates to the history reader to be consistent with the LIS outputs (This
+    enables LVT to process ALL outputs (including Lake, RTM, SAC/VIC) from LIS).
+
+  * added the changes to the configuration script from Eric Kemp
+
+- Create LVT 7.0 Public branch
+
+- Rename tools/lvt-dev to tools/lvt/7/development
+
+- Rename tools/lvt to tools/lvt-dev
+
+- checks to avoid diagnose errors when using binary LIS outputs
+
+- Updates to the NLDAS-2 reader and module.
+
+  Converted the NLDAS-2 VIC reader to the GES DISC style.
+  This data is available on Discover here:
+  /discover/nobackup/projects/drought/shared/NLDAS2.VIC
+  The data is available at the GES DISC here:
+  http://disc.sci.gsfc.nasa.gov/hydrology/data-holdings
+
+  Added NLDAS-2 SAC datasets, including the post-processed
+  SAC soil moisture on Noah levels.
+  The SAC data (NCEP/EMC style) is on Discover here:
+  /discover/nobackup/projects/drought/shared/NLDAS2.SAC
+
+  The post-processed soil moisture data on Discover here:
+  /discover/nobackup/projects/drought/shared/NLDAS2.SAC/SM
+
+  The data is available at NCEP/EMC here:
+  http://www.emc.ncep.noaa.gov/mmb/nldas/
+
+  GES DISC style data for the NLDAS-2 SAC datasets are not
+  yet created; once they are, this plugin will be modified.
+
+- updated the master config file
+
+- Added the capability to compute metrics on a basin/region scale rather
+  than on a pixel-by-pixel basis. If this option is turned on, LVT expects
+  the user to provide a categorical map which will then be used to
+  generate the basin/region delineations
+
+- added the capability to process
+
+  USGS ground water well data
+
+  Plate Boundary Observatory data (snow depth and soil moisture)
+
+- Added the plugin to read the North American Soil Moisture Database (NASMD)
+  data
+
+- fixed a missing parameter projection initialization in LVT
+
+- A few diagnostic checks on the LVT configuration
+
+- updated the ALEXI plugin to support the newly obtained 4km data
+
+- Relaxed the requirement that LIS model outputs be present at every LIS output
+  interval. The user can select a LIS model output interval (in lvt.config) that
+  is smaller than or equal to the LIS model output interval. LVT runs its clock
+  at this interval and keeps looking for LIS output files.  
+
+- fixed a bug that caused time series files to not work when multiple soil
+  layers were enabled for looking at variables like soil moisture. 
+
+- Modifications to support the change  in NETCDF output in LIS. Backward
+  compatibility to older LIS7 outputs is also maintained. 
+
+- bug fix to the ensemble standard deviation code
+
+- added support to read dekadal outputs from LIS
+
+  This implementation currently does not support temporal averaging at 
+  intervals other than 'dekad'
+
+- added the support for default options to the configure script
+
+- Corrected the number of seconds in a year.  Because this value
+  is both set and used in the code, this revision will not change
+  any output.
+
+- added support for ground water well data - not fully tested yet!
+
+  added a check in the mean metric computations to check if observations
+  are enabled. 
+
+- Adjust LDFLAGS
+
+  Using the new JasPer library installed on discover required reordering
+  some options in the LDFLAGS variable.
+
+- Merge NU-WRF updates into tools/lvt
+
+  I manually merged commits r642:1752 from the trunk of the NU-WRF
+  repository on progress, svn/nu-wrf/code/trunk, into LIS' tools/lvt
+  branch.
+
+  These updates consist of:
+
+  * Modify strings within calls to register_dataEntry to appease
+    the gfortran compiler.
+
+    Note that both the IBM/AIX Fortran compiler and gfortran expect
+    the individual strings defined in an array like ::
+
+       (/"string1", "string2"/)
+
+    to have the same length.
+
+    For example, this is incorrect ::
+
+       (/"kg/m2s", "kg/m2"/)
+
+    and this is correct ::
+
+       (/"kg/m2s", "kg/m2 "/)
+
+  * LVT_rc%var_based_strat is an integer.  To appease the gfortran
+    compiler do not check it like a logical within a conditional
+    statement.
+
+- Add JasPer library to the Config.pl configure script
+
+  Note that the user must set an LVT_JASPER environment variable
+  for the configure script to work.
+
+- added the metric to compute percentiles for each ensemble member separately
+
+- fixes to the restart support for percentiles and ensemble percentile
+  calculations
+
+- Added the description of the option for yearly temporal averaging
+  to start at any given month into the lvt.config master file.
+
+- Added longer possible character lengths for the
+  diagnostic file and for output stats directory.
+
+- Added option for calculating only percentiles climatology
+  to the lvt.config master file, and made some formatting
+  improvements.
+
+- Corrected name of NASA AMSR-E entry in lvt.config file.
+
+- More formatting corrections to the lvt.config master file.
+
+- Organization and LaTeX formatting changes to the
+  lvt.config master file for the LVT User's Guide.
+
+- documentation update, small update to the grib reader 
+
+- Adding the updated LVT usersguide to the source code
+
+- documentation updates, updates to the NCL plotting utilities. 
+
+- Updates to config files reflecting latest additions
+  to the LVT code.
+
+- Adding the files for GRACE plugin and Anomaly computations
+
+- 1. Added a plugin to process GRACE observations (these are the "processed"
+     GRACE observations generated by LDT
+  2. Added a plugin to read and process the UW ET data
+  3. Updates to the indices calculations to restart from a prescribed
+     climatology
+  4. Bug fix so that LVT doesn't overwrite metric calculations that require
+     only one pass through the data when metric types that require two passes
+     through the data are simultaneously used
+
+- Added recent option updates made within the code to the
+  sample METRICS and lvt.config.master files.  Also made
+  the MODEL TBL file consistent with LIS-7's config file.
+  Also updated documentation for all three files, and
+  made some cosmetic changes.
+
+- Corrected some typos of gswi to sgwi.
+
+- added the options for restart for SRI, SPI, SSWI and percentile calculations
+
+  Previously the code computed the climatologies and the indices all in one go.
+  Now the code has an option to simply compute the climatology alone and then
+  use that climatology to (in a restart mode) to find the required index eor
+  any particular simulation.                                                                      
+  A new metric called SGWI - standardized ground water index -- which is 
+  similar to SSWI, but for TWS variable.  
+
+- support for a number of ratio variables are added:
+  1. SWE/P (snow water equivalent over precip) 
+  2. ET/P  (evapotranspiration over precip)
+  3. Qs/P  (surface runoff over precip)
+  4. Qsb/P (subsurface runoff over precip)
+
+  Note that the model (LIS) output should have the component variables
+  in the same units. LVT do not currently do unit conversions when
+  computing these ratios. 
+
+- Change to the reader of the MOD16 dataset, so LVT will point to the
+  "LE" filenames instead of the "ET" filenames.  A unit conversion is
+  also performed.  This change was made so users can compare fluxes in
+  W/m^2.
+
+- added the file with the actual implementation of RFV metric
+
+- fixed a typo in the monthly time averaging interval check
+
+- added the river flow variate metric
+
+- Added the ability to define the start of the year when yearly intervals
+  are used in time averaging
+
+  Added metrics for computing min, max and sum
+
+- fix to the ARM data reader to check for array out of bounds
+
+- Set LVT_rc%lnc(n) and LVT_rc%lnr(n) within
+  utils/input_proc/readinput_polar.F90
+
+- Set LVT_rc%lnc(n) and LVT_rc%lnr(n) within
+  utils/input_proc/readinput_lambert.F90
+
+- updates to for the fix of time averaging options
+
+- Adding length to character strings to accomodate
+  some longer path names in the lvt.config file.
+
+  Replacing the Jan 2012 LVT User's Guide with
+  the latest available version from Dec 2012.
+
+- initial version of ALEXI reader (does not work currently)
+
+  data plugin to read LIS DA processed observations
+
+  bug fix for monthly/yearly averaging logic 
+
+  allowance for subsetting of the LDT processed domain
+
+
+========================================================================
+Land Verification Toolkit (LVT) Public Release 1.2 (r4016:4079)
+========================================================================
+
+- updates related to OptUE processing
+
+
+========================================================================
+Land Verification Toolkit (LVT) Public Release 1.1 (r3868:4015)
+========================================================================
+
+- updates and cleanups related to the latest round of LIS6 testing
+
+- bug fix to the input_proc utility that fixes a bug
+
+- Added the plugin for processing processed LIS DA observations
+
+- updates: 
+
+  1. removed the FEWSNET SOS processing metric     
+  2. Added plugins for NLDAS2, Natural streamflow
+  3. Cleaned up the utility that generates the LDT-like input file
+
+- Add Shugong Wang's updates
+  These updates provide backwards support for LIS 6.1.
+
+
+========================================================================
+Land Verification Toolkit (LVT) Public Release 1.0 (r3867)
+========================================================================
+
+- Initial release
